@@ -7,7 +7,7 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    gallery.qrc
+    qmlAnimationEffects.qrc
 
 target.path = $$[QT_INSTALL_EXAMPLES]/quickcontrols/extras/gallery
 INSTALLS += target

@@ -32,6 +32,5 @@
         <file>qml/ControlLabel.qml</file>
         <file>images/icon-back.png</file>
         <file>qml/QmlAnimationEffects.qml</file>
-        <file>qml/AnalogPathView.qml</file>
     </qresource>
 </RCC>

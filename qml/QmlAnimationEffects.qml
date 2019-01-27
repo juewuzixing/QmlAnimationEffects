@@ -82,7 +82,39 @@ Window {
     Text {
         id: textSingleton
     }
-    property Component pathViw: ControlView {}
+    property Component pathView: ControlView {
+        id: pathViewItem
+        property real value: 0.0
+        SequentialAnimation {
+            running: true
+            loops: AnimatedSprite.Infinite
+            NumberAnimation { target: pathViewItem; property: "value"; from: 1; to: 9; duration: 10000 }
+            NumberAnimation { target: pathViewItem; property: "value"; from: 9; to:1; duration: 10000 }
+        }
+
+        Item {
+            id: rpmNum
+            x: 69
+            y: 215
+            width: 640
+            height: 50
+            Repeater {
+                model: 10
+                Text {
+                    width: 20
+                    height: 28
+                    // 数值64为两个rpm数值之间距离+数值本身宽度
+                    // 数值640为整个rpm数值排列在一起的宽度即10个数值宽度+10个两个数值之间的距离
+                    x: (64 * ((index + 5) % 10) - (64 * value) + 640) % 640
+                    // y与x的位置关系为一元二次方程
+                    y: -0.0002 * x * x + 0.117 * x + 4.9298
+                    text: index
+                    color: "red"
+                    font.pixelSize: 24
+                }
+            }
+        }
+    }
 
     property Component circularGauge: CircularGaugeView {}
 
@@ -383,7 +415,7 @@ Window {
      }
 
     property var componentMap: {
-        "PathViw": pathViw,
+        "PathView": pathView,
         "CircularGauge": circularGauge,
         "DelayButton": delayButton,
         "Dial": dial,
@@ -401,7 +433,7 @@ Window {
         initialItem: ListView {
             model: ListModel {
                 ListElement {
-                    title: "PathViw"
+                    title: "PathView"
                 }
                 ListElement {
                     title: "CircularGauge"
