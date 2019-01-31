@@ -82,6 +82,35 @@ Window {
     Text {
         id: textSingleton
     }
+    property Component timeFormat: ControlView {
+        Item {
+            id: timeFormatPanel
+            x: 400
+            y: 215
+            width: 74
+            height: 23
+
+            property string timeStr: "18:00:00"
+            function timeFormatConvert(timeStr) {
+                var ts = timeStr;
+                var H = +ts.substr(0, 2);
+                var h = (H % 12) || 12;
+                // 前导0
+                h = (h < 10) ? ("0" + h) : h;
+                // 依情况显示AM或者PM
+                var ampm = H < 12 ? " AM" : " PM";
+                ts = h + ts.substr(2, 3) + ampm;
+                return ts;
+            }
+
+            Text {
+                text: timeFormatPanel.timeFormatConvert(timeFormatPanel.timeStr)
+                color: "red"
+                anchors.centerIn: parent
+                font.pixelSize: 19
+            }
+        }
+    }
     property Component pathView: ControlView {
         id: pathViewItem
         property real value: 0.0
@@ -415,6 +444,7 @@ Window {
      }
 
     property var componentMap: {
+        "TimeFormat": timeFormat,
         "PathView": pathView,
         "CircularGauge": circularGauge,
         "DelayButton": delayButton,
@@ -432,6 +462,9 @@ Window {
 
         initialItem: ListView {
             model: ListModel {
+                ListElement {
+                    title: "TimeFormat"
+                }
                 ListElement {
                     title: "PathView"
                 }
